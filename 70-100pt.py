@@ -57,16 +57,37 @@ class myApp(object):
             direction = 5
         drawpad.move(enemy, direction, 0)
         drawpad.after(5,self.animate)
+        if rocket1Fired == True:
+            drawpad.move(rocket,directon,1)
+            direction = 1
 
     def key(self,event):
         global player
         global rocket1Fired
         if event.char == "w":
-            drawpad.move(player,0,-4)
+            x1,y1,x2,y2 = drawpad.coords(player)
+	    if y1 > 0:
+                drawpad.move(player,0,-4)
+                drawpad.move(rocket1,0,-4)
+        if event.char == "a":
+            x1,y1,x2,y2 = drawpad.coords(player)
+	    if x1 > 0:
+                drawpad.move(player,-4,0)
+                drawpad.move(rocket1,-4,0)
+        if event.char == "s":
+            x1,y1,x2,y2 = drawpad.coords(player)
+	    if y2 < drawpad.winfo_height():
+                drawpad.move(player,0,4)
+                drawpad.move(rocket1,0,4)
+        if event.char == "d":
+            x1,y1,x2,y2 = drawpad.coords(player)
+	    if x2 < drawpad.winfo_width():
+                drawpad.move(player,4,0)
+                drawpad.move(rocket1,4,0)
+        if event.char == " ":
             drawpad.move(rocket1,0,-4)
-            
-    
     def collisionDetect(self, rocket):
         rx1,ry1,rx2,ry2 = drawpad.coords(rocket)
+        
 app = myApp(root)
 root.mainloop()
